@@ -12,13 +12,13 @@ mongooseClient
     console.log("✅ Connecting Database");
   })
   .catch((err) => console.error(`${err} ✖ `));
+mongooseClient.set("useFindAndModify", false);
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const Users = require("./routes/users");
-const { urlencoded } = require("express");
 
 // Middleware
 app.use(logger("dev"));

@@ -63,8 +63,20 @@ const getUser = async (req, res, next) => {
   const user = await User.findById(userId);
   return res.status(200).json({ user });
 };
-const replaceUser = async (req, res, next) => {};
-const updateUser = async (req, res, next) => {};
+
+const replaceUser = async (req, res, next) => {
+  const { userId } = req.params;
+  const newUser = req.body;
+  const result = await User.findByIdAndUpdate(userId, newUser);
+  return res.status(200).json({ success: true });
+};
+
+const updateUser = async (req, res, next) => {
+  const { userId } = req.params;
+  const newUser = req.body;
+  const result = await User.findByIdAndUpdate(userId, newUser);
+  return res.status(200).json({ success: true });
+};
 module.exports = {
   index,
   newUser,
