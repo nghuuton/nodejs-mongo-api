@@ -70,7 +70,7 @@ const newUserDeck = async (req, res, next) => {
 };
 
 const getUser = async (req, res, next) => {
-  const { userId } = req.params;
+  const { userId } = req.value.params;
   const user = await User.findById(userId);
   return res.status(200).json({ user });
 };
@@ -82,14 +82,14 @@ const getUserDeck = async (req, res, next) => {
 };
 
 const replaceUser = async (req, res, next) => {
-  const { userId } = req.params;
+  const { userId } = req.value.params;
   const newUser = req.body;
   const result = await User.findByIdAndUpdate(userId, newUser);
   return res.status(200).json({ success: true });
 };
 
 const updateUser = async (req, res, next) => {
-  const { userId } = req.params;
+  const { userId } = req.value.params;
   const newUser = req.body;
   const result = await User.findByIdAndUpdate(userId, newUser);
   return res.status(200).json({ success: true });
