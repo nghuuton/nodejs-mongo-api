@@ -53,7 +53,7 @@ const index = async (req, res, next) => {
 // };
 
 const newUser = async (req, res, next) => {
-  const newUser = new User(req.body);
+  const newUser = new User(req.value.body);
   await newUser.save();
   return res.status(201).json({ user: newUser });
 };

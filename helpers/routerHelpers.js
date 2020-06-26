@@ -1,5 +1,19 @@
 const Joi = require("@hapi/joi");
 
+const validateBody = (schema) => {
+  return (req, res, next) => {
+    const result = schema.validate(req.body);
+    if (result.error) {
+      return res.status(400).json(result.error);
+    } else {
+      if (!req.value) req.value = {};
+      if (!req.value.body) req.value.body = {};
+      req.value.body = result.value;
+      next();
+    }
+  };
+};
+
 const validateParam = (schema, name) => {
   return (req, res, next) => {
     // console.log(schema);
@@ -21,9 +35,15 @@ const schemas = {
       .regex(/^[0-9a-fA-F]{24}$/)
       .required(),
   }),
+  userSchema: Joi.object().keys({
+    firstname: Joi.string().min(2).required(),
+    lastname: Joi.string().min(2).required(),
+    email: Joi.string().email().required(),
+  }),
 };
 
 module.exports = {
+  validateBody,
   validateParam,
   schemas,
 };
