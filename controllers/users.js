@@ -77,8 +77,8 @@ const getUser = async (req, res, next) => {
 
 const getUserDeck = async (req, res, next) => {
   const { userId } = req.params;
-  const deck = await User.findById(userId);
-  console.log(deck);
+  const user = await User.findById(userId).populate("decks");
+  return res.status(200).json({ decks: user.decks });
 };
 
 const replaceUser = async (req, res, next) => {
