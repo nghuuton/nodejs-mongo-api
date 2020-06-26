@@ -5,7 +5,7 @@
  * [x] Aync/Await
  */
 const User = require("../models/User");
-
+const Deck = require("../models/Deck");
 // const index = (req, res, next) => {
 //   // Callback
 //   User.find({}, (err, users) => {
@@ -58,10 +58,27 @@ const newUser = async (req, res, next) => {
   return res.status(201).json({ user: newUser });
 };
 
+const newUserDeck = async (req, res, next) => {
+  const { userId } = req.params;
+  const newDeck = new Deck(req.body);
+  const user = await User.findById(userId);
+  newDeck.owner = user._id;
+  await newDeck.save();
+  user.decks.push(newDeck);
+  await user.save();
+  return res.status(201).json({ deck: newDeck });
+};
+
 const getUser = async (req, res, next) => {
   const { userId } = req.params;
   const user = await User.findById(userId);
   return res.status(200).json({ user });
+};
+
+const getUserDeck = async (req, res, next) => {
+  const { userId } = req.params;
+  const deck = await User.findById(userId);
+  console.log(deck);
 };
 
 const replaceUser = async (req, res, next) => {
@@ -80,7 +97,9 @@ const updateUser = async (req, res, next) => {
 module.exports = {
   index,
   newUser,
+  newUserDeck,
   getUser,
+  getUserDeck,
   replaceUser,
   updateUser,
 };

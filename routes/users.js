@@ -10,4 +10,9 @@ router
   .put(userController.replaceUser)
   .patch(userController.updateUser);
 
+router
+  .route("/:userId/decks")
+  .get(userController.getUserDeck)
+  .post(userController.newUserDeck);
+
 module.exports = router;
