@@ -15,7 +15,11 @@ router
 router
   .route("/:userId")
   .get(validateParam(schemas.idSchema, "userId"), userController.getUser)
-  .put(userController.replaceUser)
+  .put(
+    validateParam(schemas.idSchema, "userId"),
+    validateBody(schemas.userSchema),
+    userController.replaceUser
+  )
   .patch(userController.updateUser);
 
 router
