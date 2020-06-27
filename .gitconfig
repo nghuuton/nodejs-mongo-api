@@ -1,0 +1,5 @@
+[alias]
+	br = git branch
+	co = git checkout
+	cmm = git commit -m
+	add = git add .
