@@ -13,7 +13,11 @@ router
 router
   .route("/:deckId")
   .get(validateParam(schemas.idSchema, "deckId"), deckController.getDeck)
-  .put()
-  .delete();
+  .put(
+    validateParam(schemas.idSchema, "deckId"),
+    validateBody(schemas.deckOPtionSchma),
+    deckController.updateDeck
+  )
+  .delete(validateParam(schemas.idSchema, "deckId"), deckController.deleteDeck);
 
 module.exports = router;

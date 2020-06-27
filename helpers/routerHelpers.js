@@ -50,6 +50,11 @@ const schemas = {
     lastname: Joi.string().min(2),
     email: Joi.string().email(),
   }),
+  deckOPtionSchma: Joi.object().keys({
+    title: Joi.string().min(6),
+    description: Joi.string().min(1),
+    owner: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+  }),
 };
 
 module.exports = {
