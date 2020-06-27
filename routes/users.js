@@ -17,14 +17,18 @@ router
   .get(validateParam(schemas.idSchema, "userId"), userController.getUser)
   .put(
     validateParam(schemas.idSchema, "userId"),
-    validateBody(schemas.userSchema),
+    validateBody(schemas.userOptionalSchma),
     userController.replaceUser
   )
-  .patch(userController.updateUser);
+  .patch(
+    validateParam(schemas.idSchema, "userId"),
+    validateBody(schemas.userOptionalSchma),
+    userController.updateUser
+  );
 
 router
   .route("/:userId/decks")
-  .get(userController.getUserDeck)
-  .post(userController.newUserDeck);
+  .get(validateParam(schemas.idSchema, "userId"), userController.getUserDeck)
+  .post(validateParam(schemas.idSchema, "userId"), userController.newUserDeck);
 
 module.exports = router;

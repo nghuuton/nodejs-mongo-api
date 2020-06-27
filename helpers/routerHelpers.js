@@ -40,6 +40,11 @@ const schemas = {
     lastname: Joi.string().min(2).required(),
     email: Joi.string().email().required(),
   }),
+  userOptionalSchma: Joi.object().keys({
+    firstname: Joi.string().min(2),
+    lastname: Joi.string().min(2),
+    email: Joi.string().email(),
+  }),
 };
 
 module.exports = {
