@@ -5,7 +5,7 @@
  * [x] Aync/Await
  */
 const User = require("../models/User");
-
+const Deck = require("../models/Deck");
 // const index = (req, res, next) => {
 //   // Callback
 //   User.find({}, (err, users) => {
@@ -53,34 +53,53 @@ const index = async (req, res, next) => {
 // };
 
 const newUser = async (req, res, next) => {
-  const newUser = new User(req.body);
+  const newUser = new User(req.value.body);
   await newUser.save();
   return res.status(201).json({ user: newUser });
 };
 
-const getUser = async (req, res, next) => {
+const newUserDeck = async (req, res, next) => {
   const { userId } = req.params;
+  const newDeck = new Deck(req.body);
+  const user = await User.findById(userId);
+  newDeck.owner = user._id;
+  await newDeck.save();
+  user.decks.push(newDeck);
+  await user.save();
+  return res.status(201).json({ deck: newDeck });
+};
+
+const getUser = async (req, res, next) => {
+  const { userId } = req.value.params;
   const user = await User.findById(userId);
   return res.status(200).json({ user });
 };
 
+const getUserDeck = async (req, res, next) => {
+  const { userId } = req.value.params;
+  const user = await User.findById(userId).populate("decks");
+  return res.status(200).json({ decks: user.decks });
+};
+
 const replaceUser = async (req, res, next) => {
-  const { userId } = req.params;
-  const newUser = req.body;
+  const { userId } = req.value.params;
+  const newUser = req.value.body;
   const result = await User.findByIdAndUpdate(userId, newUser);
   return res.status(200).json({ success: true });
 };
 
 const updateUser = async (req, res, next) => {
-  const { userId } = req.params;
-  const newUser = req.body;
+  const { userId } = req.value.params;
+  const newUser = req.value.body;
   const result = await User.findByIdAndUpdate(userId, newUser);
   return res.status(200).json({ success: true });
 };
 module.exports = {
   index,
   newUser,
+  newUserDeck,
   getUser,
+  getUserDeck,
   replaceUser,
   updateUser,
 };
