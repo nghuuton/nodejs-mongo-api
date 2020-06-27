@@ -2,7 +2,7 @@ const Deck = require("../models/Deck");
 const User = require("../models/User");
 
 const index = async (req, res, next) => {
-  const decks = await Deck.find({});
+  const decks = await Deck.find({}).populate("owner");
   return res.status(200).json({ decks });
 };
 
