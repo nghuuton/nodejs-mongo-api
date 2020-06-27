@@ -29,6 +29,10 @@ router
 router
   .route("/:userId/decks")
   .get(validateParam(schemas.idSchema, "userId"), userController.getUserDeck)
-  .post(validateParam(schemas.idSchema, "userId"), userController.newUserDeck);
+  .post(
+    validateParam(schemas.idSchema, "userId"),
+    validateBody(schemas.deckSchema),
+    userController.newUserDeck
+  );
 
 module.exports = router;

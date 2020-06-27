@@ -59,8 +59,8 @@ const newUser = async (req, res, next) => {
 };
 
 const newUserDeck = async (req, res, next) => {
-  const { userId } = req.params;
-  const newDeck = new Deck(req.body);
+  const { userId } = req.value.params;
+  const newDeck = new Deck(req.value.body);
   const user = await User.findById(userId);
   newDeck.owner = user._id;
   await newDeck.save();

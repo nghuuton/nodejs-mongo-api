@@ -35,6 +35,10 @@ const schemas = {
       .regex(/^[0-9a-fA-F]{24}$/)
       .required(),
   }),
+  deckSchema: Joi.object().keys({
+    title: Joi.string().min(6).required(),
+    description: Joi.string().min(1).required(),
+  }),
   userSchema: Joi.object().keys({
     firstname: Joi.string().min(2).required(),
     lastname: Joi.string().min(2).required(),
