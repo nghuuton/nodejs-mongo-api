@@ -28,8 +28,13 @@ const updateDeck = async (req, res, next) => {
   const { deckId } = req.value.params;
   const { owner } = req.value.body;
   const newDeck = req.value.body;
+  /**
+   * @function findbyIdAndUpdate
+   * @returns [v]
+   * @instance Deck
+   */
   const result = await Deck.findByIdAndUpdate(deckId, newDeck);
-  console.log("Gía trị body", newDeck, "Từ body", owner, "Khi update", result);
+  // console.log("Gía trị body", newDeck, "Từ body", owner, "Khi update", result);
   if (owner) {
     const currentUser = await User.findById(result.owner);
     currentUser.decks.pull(result);
