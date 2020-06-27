@@ -2,6 +2,8 @@ const express = require("express");
 const logger = require("morgan");
 const mongooseClient = require("mongoose");
 const bodyParser = require("body-parser");
+const deckRoute = require("./routes/decks");
+const usersRoute = require("./routes/users");
 
 mongooseClient
   .connect("mongodb://localhost:27017/dtb-test", {
@@ -18,13 +20,12 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const Users = require("./routes/users");
-
 // Middleware
 app.use(logger("dev"));
 
 // Routes
-app.use("/users", Users);
+app.use("/users", usersRoute);
+app.use("/decks", deckRoute);
 // Loger Error
 app.use((req, res, next) => {
   const err = new Error("Not found!");

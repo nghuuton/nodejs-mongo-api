@@ -38,6 +38,7 @@ const schemas = {
   deckSchema: Joi.object().keys({
     title: Joi.string().min(6).required(),
     description: Joi.string().min(1).required(),
+    owner: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
   }),
   userSchema: Joi.object().keys({
     firstname: Joi.string().min(2).required(),
